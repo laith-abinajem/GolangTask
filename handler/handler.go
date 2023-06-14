@@ -62,6 +62,29 @@ func parseAccounts(filepath string) ([]model.Account, error) {
 
 	return accounts, nil
 }
+func ShowData() {
+	fileURL := "https://git.io/Jm76h"
+	filePath := "../accounts.json"
+
+	err := downloadFile(fileURL, filePath)
+	if err != nil {
+		fmt.Printf("Error downloading file: %v\n", err)
+		return
+	}
+
+	fmt.Printf("File downloaded successfully: %s\n", filePath)
+
+	accounts, err := parseAccounts(filePath)
+	if err != nil {
+		fmt.Printf("Error parsing accounts: %v\n", err)
+		return
+	}
+
+	fmt.Println("Accounts parsed successfully:")
+	for _, account := range accounts {
+		fmt.Printf("ID: %s, Name: %s, Balance: %s\n", account.ID, account.Name, account.Balance)
+	}
+}
 
 // ListAccountsHandler handles the request to list all accounts.
 func (api *API) ListAccountsHandler(w http.ResponseWriter, r *http.Request) {
